@@ -33,7 +33,17 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    let bottles = 99;
+    while(bottles>2){
+        yield `${bottles} bottles of beer on the wall, ${bottles--} bottles of beer.`;
+        yield `Take one down and pass it around, ${bottles} bottles of beer on the wall.`;
+    }
+    yield `2 bottles of beer on the wall, 2 bottles of beer.`;
+    yield `Take one down and pass it around, 1 bottle of beer on the wall.`;
+    yield  '1 bottle of beer on the wall, 1 bottle of beer.';
+    yield  'Take one down and pass it around, no more bottles of beer on the wall.';
+    yield  'No more bottles of beer on the wall, no more bottles of beer.';
+    yield  'Go to the store and buy some more, 99 bottles of beer on the wall.';
 }
 
 
@@ -47,7 +57,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    let a = 0;
+    let b = 1;
+    while(true){
+        let current = a;
+        a = b;
+        b = current + a;
+        yield current;
+    }
 }
 
 
@@ -82,7 +99,13 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let nodes = [root];
+    while(nodes.length){
+        let current = nodes.pop();
+        yield current;
+        if(current.children)
+            nodes.push(...current.children.reverse());
+    }
 }
 
 
@@ -108,7 +131,13 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let nodes = [root];
+    while(nodes.length){
+        let current = nodes.pop();
+        yield current;
+        if(current.children)
+            nodes.unshift(...current.children.reverse());
+    }
 }
 
 
@@ -126,7 +155,24 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    let s1 = source1();
+    let s2 = source2();
+    
+    let v1 = s1.next();
+    let v2 = s2.next();
+    while(true){
+        // if(v1.value==undefined&&v2.value==undefined)
+        //     return;
+        if(v1.value == undefined || v1.value>=v2.value)
+        {
+            yield v2.value;
+            v2 = s2.next();
+        }
+        else{
+            yield v1.value;
+            v1 = s1.next();
+        }
+    }
 }
 
 
